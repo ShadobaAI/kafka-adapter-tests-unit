@@ -203,8 +203,8 @@ def require_project(path: Path, description: str) -> None:
 
 
 def ensure_safe_output(options: Options) -> None:
-    # Каталог результата удаляется целиком. Поэтому запрещаем пересечение
-    # результата с любым исходным проектом.
+    # Скрипт удаляет управляемые элементы EDT-проекта внутри результата.
+    # Поэтому запрещаем пересечение результата с любым исходным проектом.
     output = options.output_dir.resolve()
     if output == Path(output.anchor) or output.parent == output:
         raise ScriptError(f"Небезопасный каталог результата: {output}")
@@ -228,12 +228,24 @@ def validate_options(options: Options) -> None:
     ensure_safe_output(options)
 
 
-def recreate_dir(path: Path) -> None:
+def remove_path(path: Path) -> None:
+    if path.is_dir():
+        shutil.rmtree(path)
+    elif path.exists():
+        path.unlink()
+
+
+def reset_output_project_entries(path: Path) -> None:
     resolved = path.resolve()
-    if resolved.exists():
-        print(f"Удаление каталога: {resolved}")
-        shutil.rmtree(resolved)
-    resolved.mkdir(parents=True, exist_ok=False)
+    resolved.mkdir(parents=True, exist_ok=True)
+
+    # Не удаляем весь --output: там могут быть README, настройки IDE или
+    # служебные файлы репозитория тестов. Чистим только то, что копируем сами.
+    for entry in EDT_PROJECT_ENTRIES:
+        target = resolved / entry
+        if target.exists():
+            print(f"Удаление: {target}")
+            remove_path(target)
 
 
 def copy_project_entries(source: Path, target: Path) -> int:
@@ -745,7 +757,7 @@ def prepare_converted_project(source_project: Path, temp_root: Path, name: str) 
 
 def build_test_edt_project(options: Options) -> None:
     validate_options(options)
-    recreate_dir(options.output_dir)
+    reset_output_project_entries(options.output_dir)
 
     # Base является каркасом проекта. Остальные проекты накладываются на него.
     base_files = copy_project_entries(options.base_project, options.output_dir)
