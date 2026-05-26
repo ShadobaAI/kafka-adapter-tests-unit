@@ -1,0 +1,32 @@
+{
+  "reportPath": "C:\\EDT\\projects\\kafka\\report.xml",
+  "closeAfterTests": true,
+  "filter": {
+    "extensions": [
+      "YAXUNIT"
+    ]
+  },
+  "settings": {
+    "ВТранзакции": false
+  },
+  "reportFormat": "jUnit",
+  "reports": [],
+  "showReport": false,
+  "logging": {
+    "file": "",
+    "console": false,
+    "enable": null,
+    "level": "debug"
+  },
+  "exitCode": "",
+  "projectPath": "",
+  "workspacePath": "",
+  "ДымовыеТесты": false,
+  "rpc": {
+    "port": 0,
+    "enable": false,
+    "key": "",
+    "transport": "ws"
+  },
+  "ПодключатьВнешниеКомпоненты": true
+}
