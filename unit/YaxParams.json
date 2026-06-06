@@ -1,32 +1,12 @@
 {
-  "reportPath": "C:\\EDT\\projects\\kafka\\report.xml",
-  "closeAfterTests": true,
   "filter": {
     "extensions": [
-      "YAXUNIT"
+      "МодульныеТесты"
     ]
   },
-  "settings": {
-    "ВТранзакции": false
-  },
   "reportFormat": "jUnit",
-  "reports": [],
+  "reportPath": ".tmp/unit/junit.xml",
+  "closeAfterTests": true,
   "showReport": false,
-  "logging": {
-    "file": "",
-    "console": false,
-    "enable": null,
-    "level": "debug"
-  },
-  "exitCode": "",
-  "projectPath": "",
-  "workspacePath": "",
-  "ДымовыеТесты": false,
-  "rpc": {
-    "port": 0,
-    "enable": false,
-    "key": "",
-    "transport": "ws"
-  },
-  "ПодключатьВнешниеКомпоненты": true
+  "exitCode": ".tmp/unit/exit-code.txt"
 }
