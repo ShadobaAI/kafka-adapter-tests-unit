@@ -1,0 +1,77 @@
+name: Publish Unit CFE
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: publish-unit-cfe
+  cancel-in-progress: true
+
+jobs:
+  build_publish:
+    name: Build and publish unit CFE
+    runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      IMAGE: ghcr.io/shadobaai/unit:latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Checkout CI scripts
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository_owner }}/kafka-tools
+          path: .ci
+
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc \
+                      /opt/hostedtoolcache/CodeQL /usr/local/share/boost \
+                      /usr/share/swift
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Convert EDT to XML
+        uses: ./.ci/.github/actions/edt2xml
+        with:
+          source-dir: unit/YAxUnit
+          xml-dir: ${{ runner.temp }}/unit-xml
+
+      - name: Build CFE
+        uses: ./.ci/.github/actions/xml2cf
+        with:
+          xml-dir: ${{ runner.temp }}/unit-xml
+          output-file: output/unit.cfe
+
+      - name: Install ORAS
+        run: |
+          ORAS_TAG="$(curl -fsSL https://api.github.com/repos/oras-project/oras/releases/latest \
+            | jq -r .tag_name)"
+          ORAS_VERSION="${ORAS_TAG#v}"
+          curl -fsSL "https://github.com/oras-project/oras/releases/download/${ORAS_TAG}/oras_${ORAS_VERSION}_linux_amd64.tar.gz" \
+            | sudo tar -xz -C /usr/local/bin oras
+
+      - name: Publish CFE to GHCR
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | oras login ghcr.io --username "${{ github.actor }}" --password-stdin
+          oras push "$IMAGE" \
+            --annotation "org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}" \
+            --annotation "org.opencontainers.image.revision=${{ github.sha }}" \
+            output/unit.cfe:application/vnd.shadobaai.1c.cfe
+
+      - name: Delete old GHCR versions
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 .ci/.github/ci-images/scripts/cleanup_ghcr.py --image "$IMAGE"
