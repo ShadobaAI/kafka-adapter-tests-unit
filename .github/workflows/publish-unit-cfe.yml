@@ -46,7 +46,7 @@ jobs:
       - name: Convert EDT to XML
         uses: ./.ci/.github/actions/edt2xml
         with:
-          source-dir: unit
+          source-dir: .
           xml-dir: ${{ runner.temp }}/unit-xml
 
       - name: Build CFE
