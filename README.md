@@ -1,4 +1,4 @@
-# 1С: Адаптер Kafka — Тесты
+# 1С: Адаптер Kafka — Unit-Тесты
 
 ![Платформа](https://img.shields.io/badge/1С-8.3.21+-blue)
 ![EDT](https://img.shields.io/badge/EDT-2025.2+-blue)
