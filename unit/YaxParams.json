@@ -5,8 +5,13 @@
     ]
   },
   "reportFormat": "jUnit",
-  "reportPath": ".tmp/unit/junit.xml",
+  "reportPath": "unit/junit.xml",
   "closeAfterTests": true,
   "showReport": false,
-  "exitCode": ".tmp/unit/exit-code.txt"
+  "exitCode": "unit/exit-code.txt",
+  "logging": {
+    "file": "unit/unint.log",
+    "console": false,
+    "level": "error"
+  }
 }
