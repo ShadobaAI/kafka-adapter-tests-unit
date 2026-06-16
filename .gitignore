@@ -1,6 +1,4 @@
 .cache/
-unit/base/.settings
-unit/base/DT-INF
-unit/base/src
-unit/base/.project
-unit/.metadata
+.metadata
+base/*
+Серверы

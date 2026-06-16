@@ -3,22 +3,20 @@
 ![Платформа](https://img.shields.io/badge/1С-8.3.21+-blue)
 ![EDT](https://img.shields.io/badge/EDT-2025.2+-blue)
 
-Набор UI- и unit-тестов для проверки поведения [1С: Адаптер Kafka](https://github.com/ShadobaAI/kafka-adapter).
+Набор unit-тестов для проверки поведения [1С: Адаптер Kafka](https://github.com/ShadobaAI/kafka-adapter).
 
 ## Назначение
 
 Репозиторий содержит тесты и локальную сборку EDT-проекта для проверки изменений адаптера:
 
-- **UI-тесты Vanessa Automation** — сценарии в каталоге `ui`, которые проверяют поведение адаптера через интерфейс пользователя;
-- **unit-тесты YAXUNIT** — проверки прикладной логики адаптера в каталоге `unit`;
-- **локальная сборка тестового EDT-проекта** — скрипты `create_test_edt.py` и `create_test_edt.sh`, которые собирают проект из `base`, `adapter`, `examples` и YAXUNIT.
+- **unit-тесты YAxUnit** — проверки прикладной логики адаптера в каталоге `unit`;
+- **локальная сборка тестового EDT-проекта** — скрипты `create_test_edt.py` и `create_test_edt.sh`, которые собирают проект из `base`, `adapter`, `examples` и `YAxUnit`.
 
 > Репозиторий предназначен только для разработки и проверки изменений адаптера. В промышленную эксплуатацию не поставляется.
 
 ## Инструменты
 
-- [Vanessa Automation](https://pr-mex.github.io/vanessa-automation/) — UI-тесты для проверки пользовательских сценариев.
-- [YAXUNIT](https://bia-technologies.github.io/yaxunit/) — unit-тесты прикладной логики 1С.
+- [YAxUnit](https://bia-technologies.github.io/yaxunit/) — unit-тесты прикладной логики 1С.
 
 ## Лицензия
 
