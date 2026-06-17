@@ -4,8 +4,8 @@
       "МодульныеТесты"
     ]
   },
-  "reportFormat": "jUnit",
-  "reportPath": "junit.xml",
+  "reportFormat": "allure",
+  "reportPath": "allure",
   "closeAfterTests": true,
   "showReport": false,
   "exitCode": "exit-code.txt",
