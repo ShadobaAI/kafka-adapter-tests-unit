@@ -9,7 +9,6 @@
   <extension xsi:type="mdclassExtension:ConfigurationExtension">
     <defaultRunMode>Checked</defaultRunMode>
     <defaultLanguage>Checked</defaultLanguage>
-    <interfaceCompatibilityMode>Checked</interfaceCompatibilityMode>
     <compatibilityMode>Checked</compatibilityMode>
   </extension>
   <containedObjects classId="9cd510cd-abfc-11d4-9434-004095e12fc7" objectId="93388b60-2aea-43f0-8d04-134e2b9b18a7"/>
@@ -28,7 +27,6 @@
   <vendor>github.com/ShadobaAI</vendor>
   <version>9.9.9.9</version>
   <defaultLanguage>Language.Русский</defaultLanguage>
-  <interfaceCompatibilityMode>TaxiEnableVersion8_2</interfaceCompatibilityMode>
   <compatibilityMode>8.3.21</compatibilityMode>
   <languages uuid="dc1c2773-9e6e-4ec3-acb6-2734c579a30b" extendedConfigurationObject="bf11f072-ee5c-4cc1-9c6d-e35b1c705b62">
     <name>Русский</name>

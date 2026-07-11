@@ -21,12 +21,18 @@ from xml.etree import ElementTree
 
 
 EDT_PROJECT_ENTRIES = (".project", ".settings", "DT-INF", "src")
+CLEAN_OUTPUT_ENTRIES = (*EDT_PROJECT_ENTRIES, ".cache")
 CONFIGURATION_MDO = Path("src") / "Configuration" / "Configuration.mdo"
 UPDATE_DB_MODULE_NAME = "ОбновлениеИнформационнойБазыKafka"
 UPDATE_DB_MODULE_PATH = Path("src") / "CommonModules" / UPDATE_DB_MODULE_NAME
 UPDATE_DB_MODULE_SOURCE = UPDATE_DB_MODULE_PATH / "Module.bsl"
 UPDATE_HANDLERS_PROCEDURE = "ПриДобавленииОбработчиковОбновления"
 EXAMPLES_UPDATE_HANDLERS_PROCEDURE = f"кфк_т_{UPDATE_HANDLERS_PROCEDURE}"
+OVERRIDABLE_COMMANDS_MODULE_NAME = "ПодключаемыеКомандыПереопределяемый"
+OVERRIDABLE_COMMANDS_MODULE_PATH = Path("src") / "CommonModules" / OVERRIDABLE_COMMANDS_MODULE_NAME
+OVERRIDABLE_COMMANDS_MODULE_SOURCE = OVERRIDABLE_COMMANDS_MODULE_PATH / "Module.bsl"
+OVERRIDABLE_COMMANDS_PROCEDURE = "ПриОпределенииКомандПодключенныхКОбъекту"
+EXAMPLES_OVERRIDABLE_COMMANDS_PROCEDURE = f"кфк_т_{OVERRIDABLE_COMMANDS_PROCEDURE}"
 APPLICATION_MODULE_PATHS = (
     Path("src") / "Configuration" / "ManagedApplicationModule.bsl",
     Path("src") / "Configuration" / "OrdinaryApplicationModule.bsl",
@@ -241,7 +247,7 @@ def reset_output_project_entries(path: Path) -> None:
 
     # Не удаляем весь --output: там могут быть README, настройки IDE или
     # служебные файлы репозитория тестов. Чистим только то, что копируем сами.
-    for entry in EDT_PROJECT_ENTRIES:
+    for entry in CLEAN_OUTPUT_ENTRIES:
         target = resolved / entry
         if target.exists():
             print(f"Удаление: {target}")
@@ -734,6 +740,29 @@ def merge_update_handlers_procedure(source_project: Path, target_project: Path) 
     return len(source_body)
 
 
+def merge_overridable_commands_procedure(source_project: Path, target_project: Path) -> int:
+    # Examples содержит свой модуль переопределения команд. Сам модуль не копируем,
+    # а добавляем тело тестовой процедуры в одноименную base-процедуру.
+    source_path = source_project / OVERRIDABLE_COMMANDS_MODULE_SOURCE
+    target_path = target_project / OVERRIDABLE_COMMANDS_MODULE_SOURCE
+    if not source_path.is_file():
+        raise ScriptError(f"Модуль ПодключаемыеКомандыПереопределяемый examples не найден: {source_path}")
+    if not target_path.is_file():
+        raise ScriptError(f"Целевой модуль ПодключаемыеКомандыПереопределяемый не найден: {target_path}")
+
+    source_text = source_path.read_text(encoding="utf-8-sig")
+    source_body = procedure_body(source_text.splitlines(), EXAMPLES_OVERRIDABLE_COMMANDS_PROCEDURE)
+    if not source_body:
+        return 0
+
+    target_text = target_path.read_text(encoding="utf-8-sig")
+    target_lines = target_text.splitlines()
+    insert_before_procedure_end(target_lines, OVERRIDABLE_COMMANDS_PROCEDURE, source_body)
+    newline = detect_newline(target_text)
+    target_path.write_text(newline.join(target_lines) + newline, encoding="utf-8")
+    return len(source_body)
+
+
 def merge_cf_project(
     source_project: Path,
     target_project: Path,
@@ -781,14 +810,26 @@ def build_test_edt_project(options: Options) -> None:
         examples_stats = merge_cf_project(
             examples,
             options.output_dir,
-            excluded_src_roots=frozenset({UPDATE_DB_MODULE_PATH.relative_to("src")}),
-            excluded_configuration_refs=frozenset({("commonModules", f"CommonModule.{UPDATE_DB_MODULE_NAME}")}),
+            excluded_src_roots=frozenset(
+                {
+                    UPDATE_DB_MODULE_PATH.relative_to("src"),
+                    OVERRIDABLE_COMMANDS_MODULE_PATH.relative_to("src"),
+                }
+            ),
+            excluded_configuration_refs=frozenset(
+                {
+                    ("commonModules", f"CommonModule.{UPDATE_DB_MODULE_NAME}"),
+                    ("commonModules", f"CommonModule.{OVERRIDABLE_COMMANDS_MODULE_NAME}"),
+                }
+            ),
         )
         update_handler_lines = merge_update_handlers_procedure(examples, options.output_dir)
+        overridable_commands_lines = merge_overridable_commands_procedure(examples, options.output_dir)
         print(
             "Examples merged: "
             f"{examples_stats.copied_files} files, {examples_stats.configuration_nodes} Configuration.mdo nodes, "
-            f"{update_handler_lines} update handler lines"
+            f"{update_handler_lines} update handler lines, "
+            f"{overridable_commands_lines} overridable command lines"
         )
 
         yaxunit = prepare_converted_project(options.yaxunit_project, temp_root, "yaxunit")
