@@ -12,8 +12,7 @@ This repository contains YAxUnit tests and scripts that assemble the local EDT t
 
 ## Repository-Specific Rules
 
-- Use only `kfk-unit-edt` for current-state queries, navigation, and every 1C change under `src/**`.
-- Do not route this project through `kfk_edt`, `conv_edt`, `code-metadata-mcp`, or `graph-metadata-mcp`.
+- Use only the EDT-MCP instance named `kfk-unit-edt` for current-state queries, navigation, platform documentation, diagnostics, and every 1C change under `src/**`.
 - Edit assembly scripts and other non-1C configuration directly in UTF-8 within task scope.
 - Do not manually edit generated EDT projects, reports, or test output.
 - Run focused YAxUnit tests for the changed behavior when the environment is available.
