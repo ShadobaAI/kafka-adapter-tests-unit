@@ -13,6 +13,7 @@ This repository contains YAxUnit tests and scripts that assemble the local EDT t
 ## Repository-Specific Rules
 
 - Use only the EDT-MCP instance named `kfk-unit-edt` for current-state queries, navigation, platform documentation, diagnostics, and every 1C change under `src/**`.
+- The repository-local `.codex/config.toml` owns the `kfk-unit-edt` server configuration. Do not move it to shared or user Codex configuration.
 - Edit assembly scripts and other non-1C configuration directly in UTF-8 within task scope.
 - Do not manually edit generated EDT projects, reports, or test output.
 - Run focused YAxUnit tests for the changed behavior when the environment is available.

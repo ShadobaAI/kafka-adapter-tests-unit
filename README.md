@@ -17,6 +17,7 @@
 ## Инструменты
 
 - [YAxUnit](https://bia-technologies.github.io/yaxunit/) — unit-тесты прикладной логики 1С.
+- `.codex/config.toml` — repository-local конфигурация MCP `kfk-unit-edt`; общие MCP и skills устанавливаются в пользовательскую конфигурацию Codex.
 
 ## Лицензия
 
