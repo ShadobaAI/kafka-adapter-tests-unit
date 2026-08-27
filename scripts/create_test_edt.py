@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Создание тестового EDT-проекта из base + adapter + examples + YAXUNIT.
+"""Создание тестового EDT-проекта из base + adapter.
 
 В отличие от create_test_cf.py этот скрипт работает не с XML-выгрузкой
-Конфигуратора 1С, а с исходниками EDT-проекта. CFE-проекты сначала приводятся
-к виду CF-проекта, после чего их metadata сливается с base.
+Конфигуратора 1С, а с исходниками EDT-проекта. CFE-проект adapter сначала
+приводится к виду CF-проекта, после чего его metadata сливается с base.
 """
 from __future__ import annotations
 
@@ -23,20 +23,6 @@ from xml.etree import ElementTree
 EDT_PROJECT_ENTRIES = (".project", ".settings", "DT-INF", "src")
 CLEAN_OUTPUT_ENTRIES = (*EDT_PROJECT_ENTRIES, ".cache")
 CONFIGURATION_MDO = Path("src") / "Configuration" / "Configuration.mdo"
-UPDATE_DB_MODULE_NAME = "ОбновлениеИнформационнойБазыKafka"
-UPDATE_DB_MODULE_PATH = Path("src") / "CommonModules" / UPDATE_DB_MODULE_NAME
-UPDATE_DB_MODULE_SOURCE = UPDATE_DB_MODULE_PATH / "Module.bsl"
-UPDATE_HANDLERS_PROCEDURE = "ПриДобавленииОбработчиковОбновления"
-EXAMPLES_UPDATE_HANDLERS_PROCEDURE = f"кфк_т_{UPDATE_HANDLERS_PROCEDURE}"
-OVERRIDABLE_COMMANDS_MODULE_NAME = "ПодключаемыеКомандыПереопределяемый"
-OVERRIDABLE_COMMANDS_MODULE_PATH = Path("src") / "CommonModules" / OVERRIDABLE_COMMANDS_MODULE_NAME
-OVERRIDABLE_COMMANDS_MODULE_SOURCE = OVERRIDABLE_COMMANDS_MODULE_PATH / "Module.bsl"
-OVERRIDABLE_COMMANDS_PROCEDURE = "ПриОпределенииКомандПодключенныхКОбъекту"
-EXAMPLES_OVERRIDABLE_COMMANDS_PROCEDURE = f"кфк_т_{OVERRIDABLE_COMMANDS_PROCEDURE}"
-APPLICATION_MODULE_PATHS = (
-    Path("src") / "Configuration" / "ManagedApplicationModule.bsl",
-    Path("src") / "Configuration" / "OrdinaryApplicationModule.bsl",
-)
 
 EXTENSION_TAGS = (
     "objectBelonging",
@@ -91,30 +77,12 @@ class Options:
     output_dir: Path
     base_project: Path
     adapter_project: Path
-    examples_project: Path
-    yaxunit_project: Path
 
 
 @dataclass(frozen=True)
 class MergeStats:
     copied_files: int
     configuration_nodes: int
-    update_handler_lines: int = 0
-
-
-@dataclass(frozen=True)
-class BslMethod:
-    name: str
-    kind: str
-    start: int
-    end: int
-
-
-@dataclass(frozen=True)
-class ApplicationModuleMergeStats:
-    copied_modules: int
-    variable_declarations: int
-    methods: int
 
 
 class RussianArgumentParser(argparse.ArgumentParser):
@@ -146,8 +114,8 @@ def configure_stdio() -> None:
 def build_parser() -> argparse.ArgumentParser:
     parser = RussianArgumentParser(
         description=(
-            "Создает EDT-проект тестовой конфигурации из base, adapter, examples и YAXUNIT. "
-            "CFE-проекты предварительно конвертируются в формат CF-проекта."
+            "Создает EDT-проект тестовой конфигурации из base и adapter. "
+            "CFE-проект adapter предварительно конвертируется в формат CF-проекта."
         )
     )
     parser.add_argument("-o", "--output", dest="output_dir", type=Path, required=True, help="каталог результата.")
@@ -159,22 +127,6 @@ def build_parser() -> argparse.ArgumentParser:
         type=Path,
         required=True,
         help="EDT-проект adapter (CFE).",
-    )
-    parser.add_argument(
-        "-e",
-        "--examples",
-        dest="examples_project",
-        type=Path,
-        required=True,
-        help="EDT-проект examples (CFE).",
-    )
-    parser.add_argument(
-        "-y",
-        "--yaxunit",
-        dest="yaxunit_project",
-        type=Path,
-        required=True,
-        help="EDT-проект YAXUNIT (CFE).",
     )
     return parser
 
@@ -193,8 +145,6 @@ def parse_options(argv: list[str] | None) -> Options:
         output_dir=absolute(args.output_dir, workdir),
         base_project=absolute(args.base_project, workdir),
         adapter_project=absolute(args.adapter_project, workdir),
-        examples_project=absolute(args.examples_project, workdir),
-        yaxunit_project=absolute(args.yaxunit_project, workdir),
     )
 
 
@@ -215,12 +165,7 @@ def ensure_safe_output(options: Options) -> None:
     if output == Path(output.anchor) or output.parent == output:
         raise ScriptError(f"Небезопасный каталог результата: {output}")
 
-    for source in (
-        options.base_project,
-        options.adapter_project,
-        options.examples_project,
-        options.yaxunit_project,
-    ):
+    for source in (options.base_project, options.adapter_project):
         resolved = source.resolve()
         if output == resolved or output in resolved.parents or resolved in output.parents:
             raise ScriptError(f"Каталог результата не должен пересекаться с исходным проектом: {resolved}")
@@ -229,8 +174,6 @@ def ensure_safe_output(options: Options) -> None:
 def validate_options(options: Options) -> None:
     require_project(options.base_project, "Проект base")
     require_project(options.adapter_project, "Проект adapter")
-    require_project(options.examples_project, "Проект examples")
-    require_project(options.yaxunit_project, "Проект YAXUNIT")
     ensure_safe_output(options)
 
 
@@ -410,359 +353,6 @@ def merge_configuration_mdo(
     return added_count
 
 
-def is_procedure_start(line: str, procedure_name: str) -> bool:
-    stripped = line.lstrip()
-    return stripped.startswith("Процедура ") and f" {procedure_name}(" in f" {stripped}"
-
-
-def procedure_bounds(lines: list[str], procedure_name: str) -> tuple[int, int]:
-    start_index = None
-    for index, line in enumerate(lines):
-        if is_procedure_start(line, procedure_name):
-            start_index = index
-            break
-
-    if start_index is None:
-        raise ScriptError(f"Процедура не найдена: {procedure_name}")
-
-    for index in range(start_index + 1, len(lines)):
-        if lines[index].strip().lower() == "конецпроцедуры":
-            return start_index, index
-
-    raise ScriptError(f"Конец процедуры не найден: {procedure_name}")
-
-
-def trimmed_body(lines: list[str]) -> list[str]:
-    start = 0
-    end = len(lines)
-    while start < end and lines[start].strip() == "":
-        start += 1
-    while end > start and lines[end - 1].strip() == "":
-        end -= 1
-    return lines[start:end]
-
-
-def procedure_body(lines: list[str], procedure_name: str) -> list[str]:
-    start_index, end_index = procedure_bounds(lines, procedure_name)
-    return trimmed_body(lines[start_index + 1 : end_index])
-
-
-def insert_before_procedure_end(lines: list[str], procedure_name: str, inserted_lines: list[str]) -> None:
-    start_index, end_index = procedure_bounds(lines, procedure_name)
-    while end_index > start_index + 1 and lines[end_index - 1].strip() == "":
-        del lines[end_index - 1]
-        end_index -= 1
-    lines[end_index:end_index] = ["", *inserted_lines, ""]
-
-
-def detect_newline(text: str) -> str:
-    return "\r\n" if "\r\n" in text else "\n"
-
-
-def is_region_start(line: str, region_name: str) -> bool:
-    # Ниже небольшой BSL-парсер для слияния модулей приложения YAXUNIT.
-    # Полный парсер здесь не нужен: достаточно областей, переменных и методов.
-    return line.strip().lower() == f"#область {region_name}".lower()
-
-
-def is_region_end(line: str) -> bool:
-    return line.strip().lower() == "#конецобласти"
-
-
-def region_bounds(lines: list[str], region_name: str) -> tuple[int, int] | None:
-    for start_index, line in enumerate(lines):
-        if not is_region_start(line, region_name):
-            continue
-        for end_index in range(start_index + 1, len(lines)):
-            if is_region_end(lines[end_index]):
-                return start_index, end_index
-        raise ScriptError(f"Конец области не найден: {region_name}")
-    return None
-
-
-def bsl_method_start(line: str) -> tuple[str, str] | None:
-    stripped = line.lstrip()
-    keyword_by_kind = {
-        "процедура": "procedure",
-        "procedure": "procedure",
-        "функция": "function",
-        "function": "function",
-    }
-    for keyword, kind in keyword_by_kind.items():
-        prefix = f"{keyword} "
-        if not stripped.lower().startswith(prefix):
-            continue
-        name = stripped[len(prefix) :].lstrip().split("(", maxsplit=1)[0].strip()
-        if name:
-            return name, kind
-    return None
-
-
-def is_bsl_method_end(line: str, kind: str) -> bool:
-    stripped = line.strip().lower()
-    if kind == "procedure":
-        return stripped in {"конецпроцедуры", "endprocedure"}
-    if kind == "function":
-        return stripped in {"конецфункции", "endfunction"}
-    return False
-
-
-def iter_bsl_methods(lines: list[str]) -> list[BslMethod]:
-    methods: list[BslMethod] = []
-    index = 0
-    while index < len(lines):
-        method_start = bsl_method_start(lines[index])
-        if method_start is None:
-            index += 1
-            continue
-        name, kind = method_start
-        for end_index in range(index + 1, len(lines)):
-            if is_bsl_method_end(lines[end_index], kind):
-                methods.append(BslMethod(name=name, kind=kind, start=index, end=end_index))
-                index = end_index + 1
-                break
-        else:
-            raise ScriptError(f"Конец метода не найден: {name}")
-    return methods
-
-
-def bsl_method_bounds(lines: list[str], method_name: str) -> BslMethod:
-    normalized_name = method_name.lower()
-    for method in iter_bsl_methods(lines):
-        if method.name.lower() == normalized_name:
-            return method
-    raise ScriptError(f"Метод не найден: {method_name}")
-
-
-def bsl_method_body_start(lines: list[str], method: BslMethod) -> int:
-    if ")" in lines[method.start]:
-        return method.start + 1
-    for index in range(method.start + 1, method.end):
-        if ")" in lines[index]:
-            return index + 1
-    return method.start + 1
-
-
-def bsl_method_body(lines: list[str], method: BslMethod) -> list[str]:
-    return trimmed_body(lines[bsl_method_body_start(lines, method) : method.end])
-
-
-def variable_names(line: str) -> tuple[str, ...]:
-    stripped = line.strip()
-    lower = stripped.lower()
-    if lower.startswith("перем "):
-        declaration = stripped[len("Перем ") :]
-    elif lower.startswith("var "):
-        declaration = stripped[len("Var ") :]
-    else:
-        return ()
-
-    declaration = declaration.split("//", maxsplit=1)[0].replace(";", " ")
-    names: list[str] = []
-    for part in declaration.split(","):
-        words = part.strip().split()
-        if words and words[0].lower() not in {"экспорт", "export"}:
-            names.append(words[0])
-    return tuple(names)
-
-
-def variable_declaration_blocks(lines: list[str]) -> list[tuple[tuple[str, ...], list[str]]]:
-    bounds = region_bounds(lines, "ОписаниеПеременных")
-    if bounds is None:
-        return []
-
-    _, region_end = bounds
-    blocks: list[tuple[tuple[str, ...], list[str]]] = []
-    index = bounds[0] + 1
-    while index < region_end:
-        names = variable_names(lines[index])
-        if not names:
-            index += 1
-            continue
-        block_end = index + 1
-        while (
-            block_end < region_end
-            and lines[block_end].startswith((" ", "\t"))
-            and lines[block_end].lstrip().startswith("//")
-        ):
-            block_end += 1
-        blocks.append((names, lines[index:block_end]))
-        index = block_end
-    return blocks
-
-
-def all_variable_names(lines: list[str]) -> set[str]:
-    result: set[str] = set()
-    for line in lines:
-        result.update(name.lower() for name in variable_names(line))
-    return result
-
-
-def ensure_variables_region(lines: list[str]) -> tuple[int, int]:
-    bounds = region_bounds(lines, "ОписаниеПеременных")
-    if bounds is not None:
-        return bounds
-
-    insertion_index = 0
-    while (
-        insertion_index < len(lines)
-        and (lines[insertion_index].strip() == "" or lines[insertion_index].lstrip().startswith("//"))
-    ):
-        insertion_index += 1
-
-    lines[insertion_index:insertion_index] = [
-        "#Область ОписаниеПеременных",
-        "",
-        "#КонецОбласти",
-        "",
-    ]
-    return insertion_index, insertion_index + 2
-
-
-def insert_missing_variable_declarations(target_lines: list[str], source_lines: list[str]) -> int:
-    existing_names = all_variable_names(target_lines)
-    inserted_lines: list[str] = []
-    inserted_count = 0
-    for names, block in variable_declaration_blocks(source_lines):
-        missing_names = [name for name in names if name.lower() not in existing_names]
-        if not missing_names:
-            continue
-        inserted_lines.extend(block)
-        inserted_count += len(missing_names)
-        existing_names.update(name.lower() for name in names)
-
-    if not inserted_lines:
-        return 0
-
-    _, region_end = ensure_variables_region(target_lines)
-    if region_end > 0 and target_lines[region_end - 1].strip() != "":
-        inserted_lines = ["", *inserted_lines]
-    if inserted_lines[-1].strip() != "":
-        inserted_lines.append("")
-    target_lines[region_end:region_end] = inserted_lines
-    return inserted_count
-
-
-def append_bsl_method(target_lines: list[str], method_lines: list[str]) -> None:
-    while target_lines and target_lines[-1].strip() == "":
-        target_lines.pop()
-    target_lines.extend(["", *method_lines])
-
-
-def merge_bsl_methods(target_lines: list[str], source_lines: list[str]) -> int:
-    merged_count = 0
-    for source_method in iter_bsl_methods(source_lines):
-        source_body = bsl_method_body(source_lines, source_method)
-        if not source_body:
-            continue
-
-        try:
-            target_method = bsl_method_bounds(target_lines, source_method.name)
-        except ScriptError:
-            append_bsl_method(target_lines, source_lines[source_method.start : source_method.end + 1])
-            merged_count += 1
-            continue
-
-        while target_method.end > target_method.start + 1 and target_lines[target_method.end - 1].strip() == "":
-            del target_lines[target_method.end - 1]
-            target_method = bsl_method_bounds(target_lines, source_method.name)
-
-        target_lines[target_method.end : target_method.end] = ["", *source_body, ""]
-        merged_count += 1
-    return merged_count
-
-
-def merge_application_module(source_path: Path, target_path: Path) -> ApplicationModuleMergeStats:
-    source_text = source_path.read_text(encoding="utf-8-sig")
-    if not target_path.is_file():
-        target_path.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(source_path, target_path)
-        return ApplicationModuleMergeStats(copied_modules=1, variable_declarations=0, methods=0)
-
-    target_text = target_path.read_text(encoding="utf-8-sig")
-    source_lines = source_text.splitlines()
-    target_lines = target_text.splitlines()
-    variable_declarations = insert_missing_variable_declarations(target_lines, source_lines)
-    methods = merge_bsl_methods(target_lines, source_lines)
-
-    if variable_declarations or methods:
-        newline = detect_newline(target_text)
-        target_path.write_text(newline.join(target_lines) + newline, encoding="utf-8")
-
-    return ApplicationModuleMergeStats(
-        copied_modules=0,
-        variable_declarations=variable_declarations,
-        methods=methods,
-    )
-
-
-def merge_application_modules(source_project: Path, target_project: Path) -> ApplicationModuleMergeStats:
-    # YAXUNIT может добавлять код в модули приложения. Их нельзя заменить целиком:
-    # нужно сохранить base-код и добавить отсутствующие переменные/методы.
-    copied_modules = 0
-    variable_declarations = 0
-    methods = 0
-    for module_path in APPLICATION_MODULE_PATHS:
-        source_path = source_project / module_path
-        if not source_path.is_file():
-            continue
-        stats = merge_application_module(source_path, target_project / module_path)
-        copied_modules += stats.copied_modules
-        variable_declarations += stats.variable_declarations
-        methods += stats.methods
-    return ApplicationModuleMergeStats(
-        copied_modules=copied_modules,
-        variable_declarations=variable_declarations,
-        methods=methods,
-    )
-
-
-def merge_update_handlers_procedure(source_project: Path, target_project: Path) -> int:
-    # Examples содержит свой модуль обновления. Сам модуль не копируем,
-    # а добавляем тело тестовой процедуры в общий модуль обновления adapter.
-    source_path = source_project / UPDATE_DB_MODULE_SOURCE
-    target_path = target_project / UPDATE_DB_MODULE_SOURCE
-    if not source_path.is_file():
-        raise ScriptError(f"Модуль обновления examples не найден: {source_path}")
-    if not target_path.is_file():
-        raise ScriptError(f"Целевой модуль обновления не найден: {target_path}")
-
-    source_text = source_path.read_text(encoding="utf-8-sig")
-    source_body = procedure_body(source_text.splitlines(), EXAMPLES_UPDATE_HANDLERS_PROCEDURE)
-    if not source_body:
-        return 0
-
-    target_text = target_path.read_text(encoding="utf-8-sig")
-    target_lines = target_text.splitlines()
-    insert_before_procedure_end(target_lines, UPDATE_HANDLERS_PROCEDURE, source_body)
-    newline = detect_newline(target_text)
-    target_path.write_text(newline.join(target_lines) + newline, encoding="utf-8")
-    return len(source_body)
-
-
-def merge_overridable_commands_procedure(source_project: Path, target_project: Path) -> int:
-    # Examples содержит свой модуль переопределения команд. Сам модуль не копируем,
-    # а добавляем тело тестовой процедуры в одноименную base-процедуру.
-    source_path = source_project / OVERRIDABLE_COMMANDS_MODULE_SOURCE
-    target_path = target_project / OVERRIDABLE_COMMANDS_MODULE_SOURCE
-    if not source_path.is_file():
-        raise ScriptError(f"Модуль ПодключаемыеКомандыПереопределяемый examples не найден: {source_path}")
-    if not target_path.is_file():
-        raise ScriptError(f"Целевой модуль ПодключаемыеКомандыПереопределяемый не найден: {target_path}")
-
-    source_text = source_path.read_text(encoding="utf-8-sig")
-    source_body = procedure_body(source_text.splitlines(), EXAMPLES_OVERRIDABLE_COMMANDS_PROCEDURE)
-    if not source_body:
-        return 0
-
-    target_text = target_path.read_text(encoding="utf-8-sig")
-    target_lines = target_text.splitlines()
-    insert_before_procedure_end(target_lines, OVERRIDABLE_COMMANDS_PROCEDURE, source_body)
-    newline = detect_newline(target_text)
-    target_path.write_text(newline.join(target_lines) + newline, encoding="utf-8")
-    return len(source_body)
-
-
 def merge_cf_project(
     source_project: Path,
     target_project: Path,
@@ -788,7 +378,7 @@ def build_test_edt_project(options: Options) -> None:
     validate_options(options)
     reset_output_project_entries(options.output_dir)
 
-    # Base является каркасом проекта. Остальные проекты накладываются на него.
+    # Base является каркасом проекта, поверх которого накладывается adapter.
     base_files = copy_project_entries(options.base_project, options.output_dir)
     print(f"Base copied: {base_files} files")
 
@@ -804,43 +394,6 @@ def build_test_edt_project(options: Options) -> None:
         print(
             "Adapter merged: "
             f"{adapter_stats.copied_files} files, {adapter_stats.configuration_nodes} Configuration.mdo nodes"
-        )
-
-        examples = prepare_converted_project(options.examples_project, temp_root, "examples")
-        examples_stats = merge_cf_project(
-            examples,
-            options.output_dir,
-            excluded_src_roots=frozenset(
-                {
-                    UPDATE_DB_MODULE_PATH.relative_to("src"),
-                    OVERRIDABLE_COMMANDS_MODULE_PATH.relative_to("src"),
-                }
-            ),
-            excluded_configuration_refs=frozenset(
-                {
-                    ("commonModules", f"CommonModule.{UPDATE_DB_MODULE_NAME}"),
-                    ("commonModules", f"CommonModule.{OVERRIDABLE_COMMANDS_MODULE_NAME}"),
-                }
-            ),
-        )
-        update_handler_lines = merge_update_handlers_procedure(examples, options.output_dir)
-        overridable_commands_lines = merge_overridable_commands_procedure(examples, options.output_dir)
-        print(
-            "Examples merged: "
-            f"{examples_stats.copied_files} files, {examples_stats.configuration_nodes} Configuration.mdo nodes, "
-            f"{update_handler_lines} update handler lines, "
-            f"{overridable_commands_lines} overridable command lines"
-        )
-
-        yaxunit = prepare_converted_project(options.yaxunit_project, temp_root, "yaxunit")
-        yaxunit_stats = merge_cf_project(yaxunit, options.output_dir)
-        yaxunit_application_modules = merge_application_modules(yaxunit, options.output_dir)
-        print(
-            "YAXUNIT merged: "
-            f"{yaxunit_stats.copied_files} files, {yaxunit_stats.configuration_nodes} Configuration.mdo nodes, "
-            f"{yaxunit_application_modules.copied_modules} app modules copied, "
-            f"{yaxunit_application_modules.variable_declarations} app variables, "
-            f"{yaxunit_application_modules.methods} app methods"
         )
 
     print(f"Done: {options.output_dir}")
