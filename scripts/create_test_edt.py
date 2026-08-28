@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Создание тестового EDT-проекта из base + adapter.
+"""Создание базовой конфигурации unit-test EDT workspace из base + adapter.
 
 В отличие от create_test_cf.py этот скрипт работает не с XML-выгрузкой
 Конфигуратора 1С, а с исходниками EDT-проекта. CFE-проект adapter сначала
 приводится к виду CF-проекта, после чего его metadata сливается с base.
+Проекты examples, unit и yaxunit остаются отдельными расширениями workspace.
 """
 from __future__ import annotations
 
@@ -114,7 +115,7 @@ def configure_stdio() -> None:
 def build_parser() -> argparse.ArgumentParser:
     parser = RussianArgumentParser(
         description=(
-            "Создает EDT-проект тестовой конфигурации из base и adapter. "
+            "Создает базовую конфигурацию unit-test EDT workspace из base и adapter. "
             "CFE-проект adapter предварительно конвертируется в формат CF-проекта."
         )
     )

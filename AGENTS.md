@@ -6,15 +6,16 @@ Read the required [workspace instructions](../../../AGENTS.md) before working in
 
 ## Repository Scope
 
-This repository contains YAxUnit tests and scripts that assemble the local EDT test project from base, adapter, examples, and YAxUnit. Start with [README.md](README.md). Preserve original Russian 1C identifiers.
+This repository contains the Kafka Adapter modular tests and scripts that assemble the unit-test base configuration from `adapter/base` and `adapter/adapter`. Start with [README.md](README.md). Preserve original Russian 1C identifiers.
 
-`../base` (`tests/unit/base` from `KAFKA_PROJECTS_ROOT`) is the assembled base configuration used by these tests. It combines `adapter/base`, `adapter/adapter`, `adapter/examples`, and the YAxUnit unit-testing framework core. Treat it as generated project material, not as an independently maintained source repository.
+The unit-test EDT workspace contains four separate projects: assembled configuration `../base`, test-data extension `../examples`, this modular-test extension, and the YAxUnit core extension in `../yaxunit`. The assembled base combines only `adapter/base` and `adapter/adapter`.
 
 ## Repository-Specific Rules
 
-- Use `kfk-unit-edt` as the authoritative MCP for live current-state queries, platform-aware navigation, documentation, diagnostics, and every 1C change under `src/**`. The shared `code-index` may provide supplementary read-only indexed analysis according to workspace policy; BSL LS is unavailable unless this repository explicitly configures it.
-- The repository-local `.codex/config.toml` owns only the shared `kfk-unit-edt` server for the `unit` and generated `base` configurations. Do not move this project-scoped server configuration to user Codex configuration.
+- Use `unit-edt` on port `8768` as the authoritative MCP for live current-state queries, platform-aware navigation, documentation, diagnostics, and every 1C change under `src/**` in the unit-test workspace.
+- Use the repository-local `kfk-unit` code-index alias for supplementary read-only analysis of this checkout. When analysis crosses into tested adapter dependencies, reuse `kfk`, `kfk-base`, and `kfk-examples` according to the workspace mapping; they do not replace the local unit alias.
+- This repository's `.codex/config.toml` is the only owner of the shared `unit-edt` registration for `../base`, `../examples`, this project, and `../yaxunit`. Do not duplicate that configuration in sibling projects or move it to user Codex configuration.
 - Edit assembly scripts and other non-1C configuration directly in UTF-8 within task scope.
 - Do not manually edit generated EDT projects, reports, or test output.
 - Run focused YAxUnit tests for the changed behavior when the environment is available.
-- Do not change adapter, base, or examples from a unit-test task without explicit multi-repository scope.
+- Do not change adapter, base, examples, or YAxUnit from a unit-test task without explicit multi-repository scope.

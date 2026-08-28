@@ -1,35 +1,35 @@
 #:schema https://developers.openai.com/codex/config-schema.json
 
-[mcp_servers.kfk-unit-edt]
-url = "http://localhost:8765/mcp"
+[mcp_servers.unit-edt]
+url = "http://localhost:8768/mcp"
 enabled = true
 required = false
 startup_timeout_sec = 2
-description = "1C:EDT workspace for configurations: unit, base."
+description = "1C:EDT unit-test workspace on port 8768: base, examples, unit, yaxunit."
 default_tools_approval_mode = "approve"
 disabled_tools = ["git", "ask_workmate"]
 
-[mcp_servers.kfk-unit-edt.tools.delete_metadata]
+[mcp_servers.unit-edt.tools.delete_metadata]
 approval_mode = "prompt"
-[mcp_servers.kfk-unit-edt.tools.delete_project]
+[mcp_servers.unit-edt.tools.delete_project]
 approval_mode = "prompt"
-[mcp_servers.kfk-unit-edt.tools.delete_infobase]
+[mcp_servers.unit-edt.tools.delete_infobase]
 approval_mode = "prompt"
-[mcp_servers.kfk-unit-edt.tools.update_database]
+[mcp_servers.unit-edt.tools.update_database]
 approval_mode = "prompt"
-[mcp_servers.kfk-unit-edt.tools.import_configuration_from_xml]
+[mcp_servers.unit-edt.tools.import_configuration_from_xml]
 approval_mode = "prompt"
-[mcp_servers.kfk-unit-edt.tools.clean_project]
+[mcp_servers.unit-edt.tools.clean_project]
 approval_mode = "prompt"
-[mcp_servers.kfk-unit-edt.tools.set_infobase_credentials]
+[mcp_servers.unit-edt.tools.set_infobase_credentials]
 approval_mode = "prompt"
-[mcp_servers.kfk-unit-edt.tools.set_variable]
+[mcp_servers.unit-edt.tools.set_variable]
 approval_mode = "prompt"
-[mcp_servers.kfk-unit-edt.tools.evaluate_expression]
+[mcp_servers.unit-edt.tools.evaluate_expression]
 approval_mode = "prompt"
-[mcp_servers.kfk-unit-edt.tools.create_git_branch]
+[mcp_servers.unit-edt.tools.create_git_branch]
 approval_mode = "prompt"
-[mcp_servers.kfk-unit-edt.tools.switch_git_branch]
+[mcp_servers.unit-edt.tools.switch_git_branch]
 approval_mode = "prompt"
-[mcp_servers.kfk-unit-edt.tools.set_branch_infobase]
+[mcp_servers.unit-edt.tools.set_branch_infobase]
 approval_mode = "prompt"

@@ -34,7 +34,8 @@ if [ -z "${PYTHON:-}" ]; then
   fi
 fi
 
-# По умолчанию скрипт запускается из tests/unit/unit/scripts и пересоздает tests/unit/base.
+# Пересобираем только tests/unit/base. Проекты examples, unit и yaxunit
+# подключаются в EDT workspace как отдельные расширения и здесь не объединяются.
 OUTPUT_PROJECT="${OUTPUT_PROJECT:-$SCRIPT_DIR/../../base}"
 BASE_PROJECT="${BASE_PROJECT:-$WORKSPACE_ROOT/adapter/base}"
 ADAPTER_PROJECT="${ADAPTER_PROJECT:-$WORKSPACE_ROOT/adapter/adapter}"
