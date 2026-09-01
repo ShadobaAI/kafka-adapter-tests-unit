@@ -37,5 +37,4 @@
     </extension>
     <languageCode>ru</languageCode>
   </languages>
-  <commonModules>CommonModule.ОМ_ЮТест</commonModules>
 </mdclass:Configuration>
