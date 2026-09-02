@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:CommonModule xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="d6da61a1-d653-4f96-8991-82ab8fec6fd9">
+  <name>РС_кфкПозицииОпераций_ММ</name>
+  <synonym>
+    <key>ru</key>
+    <value>РС_кфкПозицииОпераций_ММ</value>
+  </synonym>
+  <server>true</server>
+  <externalConnection>true</externalConnection>
+  <clientOrdinaryApplication>true</clientOrdinaryApplication>
+</mdclass:CommonModule>

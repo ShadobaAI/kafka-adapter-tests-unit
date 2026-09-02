@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:CommonModule xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="6fa74b4e-4062-45ee-9d18-97d0f337d21f">
+  <name>РС_кфкПараметрыОчисткиХранилища_ММ</name>
+  <synonym>
+    <key>ru</key>
+    <value>РС_кфкПараметрыОчисткиХранилища_ММ</value>
+  </synonym>
+  <server>true</server>
+  <externalConnection>true</externalConnection>
+  <clientOrdinaryApplication>true</clientOrdinaryApplication>
+</mdclass:CommonModule>
