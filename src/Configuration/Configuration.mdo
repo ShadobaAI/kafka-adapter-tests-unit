@@ -37,6 +37,7 @@
     </extension>
     <languageCode>ru</languageCode>
   </languages>
+  <commonModules>CommonModule.Обр_кфкИнтеграция_МО</commonModules>
   <commonModules>CommonModule.Обр_кфкПанельАдминистрирования_ММ</commonModules>
   <commonModules>CommonModule.Обр_кфкРегистрацияИзменений_ММ</commonModules>
   <commonModules>CommonModule.РС_кфкВходящиеСообщения_ММ</commonModules>
@@ -48,4 +49,5 @@
   <commonModules>CommonModule.Спр_кфкБрокеры_ММ</commonModules>
   <commonModules>CommonModule.Спр_кфкКонсьюмеры_ММ</commonModules>
   <commonModules>CommonModule.Спр_кфкПродюсеры_ММ</commonModules>
+  <dataProcessors>DataProcessor.кфкИнтеграция</dataProcessors>
 </mdclass:Configuration>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:CommonModule xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="ff64b3ab-a01d-4a0c-9edf-8ac301ceac63">
+  <name>Обр_кфкИнтеграция_МО</name>
+  <synonym>
+    <key>ru</key>
+    <value>Обработка кфкИнтеграция. Модуль объекта</value>
+  </synonym>
+  <server>true</server>
+  <externalConnection>true</externalConnection>
+  <clientOrdinaryApplication>true</clientOrdinaryApplication>
+</mdclass:CommonModule>
