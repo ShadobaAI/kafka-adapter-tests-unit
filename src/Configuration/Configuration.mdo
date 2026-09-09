@@ -48,6 +48,7 @@
   <commonModules>CommonModule.ОбщегоНазначения</commonModules>
   <commonModules>CommonModule.ОбщегоНазначенияКлиентСервер</commonModules>
   <commonModules>CommonModule.ОМ_кфкИнтеграция</commonModules>
+  <commonModules>CommonModule.ОМ_кфкИнтеграцияСлужебный</commonModules>
   <commonModules>CommonModule.ОМ_кфкИнтеграцияСлужебныйВызовСервера</commonModules>
   <commonModules>CommonModule.ОМ_кфкИнтеграцияСлужебныйПовтИсп</commonModules>
   <commonModules>CommonModule.ОМ_кфкОбщегоНазначенияСлужебный</commonModules>
@@ -63,4 +64,5 @@
   <commonModules>CommonModule.ют_КоннекторИнтеграцииДляТестов</commonModules>
   <catalogs>Catalog.кфкПродюсеры</catalogs>
   <dataProcessors>DataProcessor.кфкИнтеграция</dataProcessors>
+  <dataProcessors>DataProcessor.ют_КомпонентаKafkaДляТестов</dataProcessors>
 </mdclass:Configuration>

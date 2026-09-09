@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:DataProcessor xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="f9501b25-9cb9-4812-bc26-33383972596b">
+  <producedTypes>
+    <objectType typeId="69e3a55b-22b6-4a34-a757-fbfb9cc0fc7a" valueTypeId="26940c39-0560-40d4-95ee-caa566132607"/>
+    <managerType typeId="bbd8ecdc-4674-4623-a4d9-055c5199c78a" valueTypeId="60a9879e-d2ff-4c8c-a8e2-c424d5442eeb"/>
+  </producedTypes>
+  <name>ют_КомпонентаKafkaДляТестов</name>
+  <synonym>
+    <key>ru</key>
+    <value>Двойник компоненты Kafka для модульных тестов</value>
+  </synonym>
+  <useStandardCommands>true</useStandardCommands>
+  <attributes uuid="f465fca1-3f55-4ee5-baef-8dc478cd702d">
+    <name>КаталогЛогов</name>
+    <synonym>
+      <key>ru</key>
+      <value>Каталог логов</value>
+    </synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers/>
+    </type>
+  </attributes>
+  <attributes uuid="69754bd1-2fd8-435f-b86b-d860de19a3de">
+    <name>ФорматИмениФайловЛога</name>
+    <synonym>
+      <key>ru</key>
+      <value>Формат имени файлов лога</value>
+    </synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers/>
+    </type>
+  </attributes>
+</mdclass:DataProcessor>
