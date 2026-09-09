@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:CommonModule xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="582d0ac5-3eda-4e0f-a98a-04b2fb848d5c">
+  <name>ют_КоннекторИнтеграцииДляТестов</name>
+  <synonym>
+    <key>ru</key>
+    <value>Коннектор интеграции для тестов</value>
+  </synonym>
+  <server>true</server>
+  <externalConnection>true</externalConnection>
+  <clientOrdinaryApplication>true</clientOrdinaryApplication>
+</mdclass:CommonModule>
