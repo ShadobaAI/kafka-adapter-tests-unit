@@ -37,6 +37,7 @@
     </extension>
     <languageCode>ru</languageCode>
   </languages>
+  <commonModules>CommonModule.ДлительныеОперации</commonModules>
   <commonModules>CommonModule.кфкИнтеграцияСлужебный</commonModules>
   <commonModules>CommonModule.кфкИнтеграцияСлужебныйПовтИсп</commonModules>
   <commonModules>CommonModule.кфкОбработкаСобытийСлужебный</commonModules>
@@ -45,7 +46,10 @@
   <commonModules>CommonModule.Обр_кфкПанельАдминистрирования_ММ</commonModules>
   <commonModules>CommonModule.Обр_кфкРегистрацияИзменений_ММ</commonModules>
   <commonModules>CommonModule.ОбщегоНазначения</commonModules>
+  <commonModules>CommonModule.ОбщегоНазначенияКлиентСервер</commonModules>
   <commonModules>CommonModule.ОМ_кфкИнтеграция</commonModules>
+  <commonModules>CommonModule.ОМ_кфкИнтеграцияСлужебныйВызовСервера</commonModules>
+  <commonModules>CommonModule.ОМ_кфкИнтеграцияСлужебныйПовтИсп</commonModules>
   <commonModules>CommonModule.ОМ_кфкОбщегоНазначенияСлужебный</commonModules>
   <commonModules>CommonModule.РС_кфкВходящиеСообщения_ММ</commonModules>
   <commonModules>CommonModule.РС_кфкИсходящиеСообщения_ММ</commonModules>
@@ -57,5 +61,6 @@
   <commonModules>CommonModule.Спр_кфкКонсьюмеры_ММ</commonModules>
   <commonModules>CommonModule.Спр_кфкПродюсеры_ММ</commonModules>
   <commonModules>CommonModule.ют_КоннекторИнтеграцииДляТестов</commonModules>
+  <catalogs>Catalog.кфкПродюсеры</catalogs>
   <dataProcessors>DataProcessor.кфкИнтеграция</dataProcessors>
 </mdclass:Configuration>

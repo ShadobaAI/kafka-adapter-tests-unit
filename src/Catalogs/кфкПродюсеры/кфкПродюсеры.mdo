@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" xmlns:mdclassExtension="http://g5.1c.ru/v8/dt/metadata/mdclass/extension" uuid="e01482dd-cee3-491f-8ae4-ba7ca768fe44" extendedConfigurationObject="afee60bf-be12-4eb4-bbd4-327b54559485">
+  <producedTypes>
+    <objectType typeId="587112bf-c81b-4b24-863a-08410778b6ff" valueTypeId="f63e164a-d40b-4bbc-9abe-ae353803b85f"/>
+    <refType typeId="aa54bd75-fdb0-4126-b87d-2d5725bc5b2d" valueTypeId="9a400179-df83-496b-ac04-8569da35508e"/>
+    <selectionType typeId="5da64dab-f3fd-4706-a3db-e856f3c2880b" valueTypeId="9dc4a940-daec-4412-9b79-a83c917867e2"/>
+    <listType typeId="ff355e6f-cd9e-4f56-8db1-fc60251fd596" valueTypeId="3b5a3351-6a12-4b7f-ac06-1510b3a7ac24"/>
+    <managerType typeId="c0bb934a-1b15-4684-927e-d53a377956f8" valueTypeId="91f42c49-4c42-4bbd-9c86-32b008d92879"/>
+  </producedTypes>
+  <name>кфкПродюсеры</name>
+  <objectBelonging>Adopted</objectBelonging>
+  <extension xsi:type="mdclassExtension:CatalogExtension">
+    <extendedConfigurationObject>Checked</extendedConfigurationObject>
+  </extension>
+  <useStandardCommands>true</useStandardCommands>
+</mdclass:Catalog>
