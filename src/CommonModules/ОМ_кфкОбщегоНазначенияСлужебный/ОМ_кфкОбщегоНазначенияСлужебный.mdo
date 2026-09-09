@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:CommonModule xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="49d02b83-82ec-41f7-b6af-f2e87c38882c">
+  <name>ОМ_кфкОбщегоНазначенияСлужебный</name>
+  <synonym>
+    <key>ru</key>
+    <value>Тесты общего модуля кфкОбщегоНазначенияСлужебный</value>
+  </synonym>
+  <server>true</server>
+  <externalConnection>true</externalConnection>
+  <clientOrdinaryApplication>true</clientOrdinaryApplication>
+</mdclass:CommonModule>

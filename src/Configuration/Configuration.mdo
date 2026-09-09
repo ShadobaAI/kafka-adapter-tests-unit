@@ -41,6 +41,7 @@
   <commonModules>CommonModule.Обр_кфкПанельАдминистрирования_ММ</commonModules>
   <commonModules>CommonModule.Обр_кфкРегистрацияИзменений_ММ</commonModules>
   <commonModules>CommonModule.ОбщегоНазначения</commonModules>
+  <commonModules>CommonModule.ОМ_кфкОбщегоНазначенияСлужебный</commonModules>
   <commonModules>CommonModule.РС_кфкВходящиеСообщения_ММ</commonModules>
   <commonModules>CommonModule.РС_кфкИсходящиеСообщения_ММ</commonModules>
   <commonModules>CommonModule.РС_кфкПараметрыКонтроляИнтеграции_ММ</commonModules>
