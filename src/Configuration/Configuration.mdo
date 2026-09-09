@@ -37,10 +37,15 @@
     </extension>
     <languageCode>ru</languageCode>
   </languages>
+  <commonModules>CommonModule.кфкИнтеграцияСлужебный</commonModules>
+  <commonModules>CommonModule.кфкИнтеграцияСлужебныйПовтИсп</commonModules>
+  <commonModules>CommonModule.кфкОбработкаСобытийСлужебный</commonModules>
+  <commonModules>CommonModule.кфкОбщегоНазначенияСлужебный</commonModules>
   <commonModules>CommonModule.Обр_кфкИнтеграция_МО</commonModules>
   <commonModules>CommonModule.Обр_кфкПанельАдминистрирования_ММ</commonModules>
   <commonModules>CommonModule.Обр_кфкРегистрацияИзменений_ММ</commonModules>
   <commonModules>CommonModule.ОбщегоНазначения</commonModules>
+  <commonModules>CommonModule.ОМ_кфкИнтеграция</commonModules>
   <commonModules>CommonModule.ОМ_кфкОбщегоНазначенияСлужебный</commonModules>
   <commonModules>CommonModule.РС_кфкВходящиеСообщения_ММ</commonModules>
   <commonModules>CommonModule.РС_кфкИсходящиеСообщения_ММ</commonModules>

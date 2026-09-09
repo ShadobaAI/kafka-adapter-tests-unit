@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:CommonModule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" xmlns:mdclassExtension="http://g5.1c.ru/v8/dt/metadata/mdclass/extension" uuid="bf68f4d3-0259-4f85-8f6d-c176368692f1" extendedConfigurationObject="ca827590-3959-447c-b243-596237d48ed1">
+  <name>кфкОбработкаСобытийСлужебный</name>
+  <objectBelonging>Adopted</objectBelonging>
+  <extension xsi:type="mdclassExtension:CommonModuleExtension">
+    <extendedConfigurationObject>Checked</extendedConfigurationObject>
+    <global>Checked</global>
+    <clientManagedApplication>Checked</clientManagedApplication>
+    <server>Checked</server>
+    <externalConnection>Checked</externalConnection>
+    <serverCall>Checked</serverCall>
+    <clientOrdinaryApplication>Checked</clientOrdinaryApplication>
+  </extension>
+  <server>true</server>
+  <externalConnection>true</externalConnection>
+  <clientOrdinaryApplication>true</clientOrdinaryApplication>
+</mdclass:CommonModule>
