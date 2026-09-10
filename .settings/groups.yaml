@@ -1,0 +1,57 @@
+groups:
+- children:
+  - CommonModule.РС_кфкВходящиеСообщения_ММ
+  - CommonModule.РС_кфкИсходящиеСообщения_ММ
+  - CommonModule.РС_кфкПараметрыКонтроляИнтеграции_ММ
+  - CommonModule.РС_кфкПараметрыЛогирования_ММ
+  - CommonModule.РС_кфкПараметрыОчисткиХранилища_ММ
+  - CommonModule.РС_кфкПозицииОпераций_ММ
+  description: null
+  name: Регистры сведений
+  order: 0
+  path: CommonModule
+- children:
+  - CommonModule.Спр_кфкБрокеры_ММ
+  - CommonModule.Спр_кфкКонсьюмеры_ММ
+  - CommonModule.Спр_кфкПродюсеры_ММ
+  description: null
+  name: Справочники
+  order: 1
+  path: CommonModule
+- children:
+  - CommonModule.Обр_кфкИнтеграция_МО
+  - CommonModule.Обр_кфкПанельАдминистрирования_ММ
+  - CommonModule.Обр_кфкРегистрацияИзменений_ММ
+  description: null
+  name: Обработки
+  order: 2
+  path: CommonModule
+- children:
+  - CommonModule.ОМ_кфкИнтеграция
+  - CommonModule.ОМ_кфкИнтеграцияСлужебный
+  - CommonModule.ОМ_кфкИнтеграцияСлужебныйВызовСервера
+  - CommonModule.ОМ_кфкИнтеграцияСлужебныйПовтИсп
+  - CommonModule.ОМ_кфкОбработкаСобытийСлужебный
+  - CommonModule.ОМ_кфкОбщегоНазначенияСлужебный
+  description: null
+  name: Общие модули
+  order: 3
+  path: CommonModule
+- children:
+  - CommonModule.ют_КоннекторИнтеграцииДляТестов
+  description: null
+  name: Тестовые помощники
+  order: 4
+  path: CommonModule
+- children:
+  - CommonModule.ДлительныеОперации
+  - CommonModule.кфкИнтеграцияСлужебный
+  - CommonModule.кфкИнтеграцияСлужебныйПовтИсп
+  - CommonModule.кфкОбработкаСобытийСлужебный
+  - CommonModule.кфкОбщегоНазначенияСлужебный
+  - CommonModule.ОбщегоНазначения
+  - CommonModule.ОбщегоНазначенияКлиентСервер
+  description: null
+  name: Заимствованные модули
+  order: 5
+  path: CommonModule
