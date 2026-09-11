@@ -3,6 +3,12 @@
   "settings": {
     "common-module-server-call": {
       "enabled": true
+    },
+    "doc-comment-type": {
+      "enabled": false
+    },
+    "extension-md-object-prefix": {
+      "enabled": false
     }
   }
 }
