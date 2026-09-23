@@ -42,6 +42,7 @@
   <commonModules>CommonModule.кфкИнтеграцияСлужебныйПовтИсп</commonModules>
   <commonModules>CommonModule.кфкОбработкаСобытийСлужебный</commonModules>
   <commonModules>CommonModule.кфкОбщегоНазначенияСлужебный</commonModules>
+  <commonModules>CommonModule.кфкФоновыеОперацииСлужебный</commonModules>
   <commonModules>CommonModule.Обр_кфкИнтеграция_МО</commonModules>
   <commonModules>CommonModule.Обр_кфкПанельАдминистрирования_ММ</commonModules>
   <commonModules>CommonModule.Обр_кфкРегистрацияИзменений_ММ</commonModules>
@@ -53,6 +54,11 @@
   <commonModules>CommonModule.ОМ_кфкИнтеграцияСлужебныйПовтИсп</commonModules>
   <commonModules>CommonModule.ОМ_кфкОбработкаСобытийСлужебный</commonModules>
   <commonModules>CommonModule.ОМ_кфкОбщегоНазначенияСлужебный</commonModules>
+  <commonModules>CommonModule.ОМ_кфкФоновыеОперацииСлужебный</commonModules>
+  <commonModules>CommonModule.ОМ_кфкФоновыеОперацииСлужебный_Отправка</commonModules>
+  <commonModules>CommonModule.ОМ_кфкФоновыеОперацииСлужебный_ПолучениеОчистка</commonModules>
+  <commonModules>CommonModule.ОМ_кфкФоновыеОперацииСлужебный_Стенд</commonModules>
+  <commonModules>CommonModule.ОМ_кфкФоновыеОперацииСлужебный_Управление</commonModules>
   <commonModules>CommonModule.РС_кфкВходящиеСообщения_ММ</commonModules>
   <commonModules>CommonModule.РС_кфкИсходящиеСообщения_ММ</commonModules>
   <commonModules>CommonModule.РС_кфкПараметрыКонтроляИнтеграции_ММ</commonModules>
@@ -63,7 +69,12 @@
   <commonModules>CommonModule.Спр_кфкКонсьюмеры_ММ</commonModules>
   <commonModules>CommonModule.Спр_кфкПродюсеры_ММ</commonModules>
   <commonModules>CommonModule.ют_КоннекторИнтеграцииДляТестов</commonModules>
+  <catalogs>Catalog.кфкКонсьюмеры</catalogs>
   <catalogs>Catalog.кфкПродюсеры</catalogs>
+  <enums>Enum.кфкСобытияРегистрации</enums>
+  <enums>Enum.кфкСтатусыСообщений</enums>
   <dataProcessors>DataProcessor.кфкИнтеграция</dataProcessors>
   <dataProcessors>DataProcessor.ют_КомпонентаKafkaДляТестов</dataProcessors>
+  <informationRegisters>InformationRegister.кфкВходящиеСообщения</informationRegisters>
+  <informationRegisters>InformationRegister.кфкИсходящиеСообщения</informationRegisters>
 </mdclass:Configuration>

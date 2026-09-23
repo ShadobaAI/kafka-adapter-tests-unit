@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" xmlns:mdclassExtension="http://g5.1c.ru/v8/dt/metadata/mdclass/extension" uuid="abb579f9-c128-43d5-a0fb-b99cfabca643" extendedConfigurationObject="7e985d95-84ed-4445-8833-6748fae45fdc">
+  <producedTypes>
+    <objectType typeId="fa2fb15e-1c6c-4b8c-8ff6-bce8ae14cf1a" valueTypeId="05c1af77-df58-4b51-99cf-ff9ff99f2b34"/>
+    <refType typeId="2a93c98a-9923-43a7-9b77-75f046996b90" valueTypeId="c710fb70-cd4c-426f-9aed-5cb11fafe46b"/>
+    <selectionType typeId="026e5fe7-5712-4dfd-abe2-6db78f94990f" valueTypeId="c77d8a7f-8efc-47d6-8370-c49874a0e840"/>
+    <listType typeId="4e3f2827-eb15-47bf-af4f-52229591fba5" valueTypeId="94e5d5db-8427-4b01-8aa7-2d6486e3a0cb"/>
+    <managerType typeId="8485d6f0-1dee-4e84-954a-a76226726adc" valueTypeId="feb0bac4-be9c-4836-b2e5-13fcce8d7f93"/>
+  </producedTypes>
+  <name>кфкКонсьюмеры</name>
+  <objectBelonging>Adopted</objectBelonging>
+  <extension xsi:type="mdclassExtension:CatalogExtension">
+    <extendedConfigurationObject>Checked</extendedConfigurationObject>
+  </extension>
+  <useStandardCommands>true</useStandardCommands>
+</mdclass:Catalog>
