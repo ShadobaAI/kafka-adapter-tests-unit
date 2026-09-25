@@ -1,0 +1,51 @@
+<package xmlns="http://v8.1c.ru/8.1/xdto" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" targetNamespace="http://v8.fsk.ru/kfk/unit/graph/1.0">
+	<objectType name="ЛистГрафа">
+		<property name="name" type="xs:string" lowerBound="1" upperBound="1"/>
+	</objectType>
+	<objectType name="РазвилкаГрафа">
+		<property name="name" type="xs:string" lowerBound="1" upperBound="1"/>
+		<property xmlns:d3p1="http://v8.fsk.ru/kfk/unit/graph/1.0" name="left" type="d3p1:ЛистГрафа" lowerBound="0" upperBound="1"/>
+		<property xmlns:d3p1="http://v8.fsk.ru/kfk/unit/graph/1.0" name="right" type="d3p1:ЛистГрафа" lowerBound="0" upperBound="1"/>
+	</objectType>
+	<objectType name="КлючевыеСвойстваПроверки">
+		<property name="name" type="xs:string" lowerBound="1" upperBound="1"/>
+	</objectType>
+	<objectType name="ОбщиеСвойстваПроверки">
+		<property name="shared" type="xs:string" lowerBound="0" upperBound="1"/>
+		<property name="fallback" type="xs:string" lowerBound="0" upperBound="1"/>
+	</objectType>
+	<objectType name="СоставныеСвойстваПроверки">
+		<property xmlns:d3p1="http://v8.fsk.ru/kfk/unit/graph/1.0" name="text" type="d3p1:ВариантТекста" lowerBound="0" upperBound="1"/>
+		<property name="number" type="xs:decimal" lowerBound="0" upperBound="1"/>
+	</objectType>
+	<objectType name="ПроверкаСтруктурED">
+		<property name="name" type="xs:string" lowerBound="1" upperBound="1"/>
+		<property xmlns:d3p1="http://v8.fsk.ru/kfk/unit/graph/1.0" name="key" type="d3p1:КлючевыеСвойстваПроверки" lowerBound="0" upperBound="1"/>
+		<property xmlns:d3p1="http://v8.fsk.ru/kfk/unit/graph/1.0" name="general" type="d3p1:ОбщиеСвойстваПроверки" lowerBound="0" upperBound="1"/>
+		<property xmlns:d3p1="http://v8.fsk.ru/kfk/unit/graph/1.0" name="variant" type="d3p1:СоставныеСвойстваПроверки" lowerBound="0" upperBound="1"/>
+		<property name="AdditionalInfo" type="xs:anyType" lowerBound="0" upperBound="1"/>
+		<property xmlns:d3p1="http://v8.fsk.ru/kfk/unit/graph/1.0" name="table" type="d3p1:ТаблицаПроверки" lowerBound="0" upperBound="1"/>
+	</objectType>
+	<objectType name="СтрокаТаблицыПроверки">
+		<property name="name" type="xs:string" lowerBound="1" upperBound="1"/>
+		<property xmlns:d3p1="http://v8.fsk.ru/kfk/unit/graph/1.0" name="general" type="d3p1:ОбщиеСвойстваПроверки" lowerBound="0" upperBound="1"/>
+	</objectType>
+	<objectType name="ВариантТекста">
+		<property name="value" type="xs:string" lowerBound="0" upperBound="1"/>
+	</objectType>
+	<objectType name="ТаблицаПроверки">
+		<property xmlns:d3p1="http://v8.fsk.ru/kfk/unit/graph/1.0" name="row" type="d3p1:СтрокаТаблицыПроверки" lowerBound="0" upperBound="99"/>
+	</objectType>
+	<objectType name="ПроверкаМассивов">
+		<property name="name" type="xs:string" lowerBound="1" upperBound="1"/>
+		<property name="values" type="xs:string" lowerBound="0" upperBound="99"/>
+		<property xmlns:d3p1="http://v8.fsk.ru/kfk/unit/graph/1.0" name="table" type="d3p1:ТаблицаПроверки" lowerBound="0" upperBound="1"/>
+	</objectType>
+	<objectType name="ПроверкаОграничений">
+		<property name="name" type="xs:string" lowerBound="1" upperBound="1"/>
+		<property name="positive" type="xs:positiveInteger" lowerBound="0" upperBound="1"/>
+		<property name="required" type="xs:string" lowerBound="1" upperBound="1"/>
+		<property name="nullable" type="xs:string" lowerBound="0" upperBound="1" nillable="true"/>
+	</objectType>
+	<objectType name="ПустойТипКонстанты"/>
+</package>

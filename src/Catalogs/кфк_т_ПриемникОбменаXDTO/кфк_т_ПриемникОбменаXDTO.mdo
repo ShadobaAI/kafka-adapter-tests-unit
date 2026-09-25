@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Catalog xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="c28ce858-6e4f-42bb-a465-1ef76c358174">
+  <producedTypes>
+    <objectType typeId="830de217-0a07-4c8d-90de-51ab17eed846" valueTypeId="85f1e7bf-d806-4833-96a2-c61e6125f2f7"/>
+    <refType typeId="a30f21fe-21b6-463e-84a8-28e19b66ad36" valueTypeId="ab4a2783-650a-416c-99f5-5fa5080ee3e5"/>
+    <selectionType typeId="983c13fe-e2f0-405f-94c8-044cbcf087a2" valueTypeId="895b72cc-dab5-4a6c-af8a-283046081209"/>
+    <listType typeId="d13cc046-bde8-4585-ae2f-639f8912e0f7" valueTypeId="d069600f-d954-44be-ac51-b60355a57119"/>
+    <managerType typeId="1d7f55e3-7cf3-4bca-b800-c41d23699da2" valueTypeId="4e7f2de2-bbcf-4d19-9bcf-e555637a046f"/>
+  </producedTypes>
+  <name>кфк_т_ПриемникОбменаXDTO</name>
+  <synonym>
+    <key>ru</key>
+    <value>Приемник тестового обмена XDTO</value>
+  </synonym>
+  <useStandardCommands>true</useStandardCommands>
+  <inputByString>Catalog.кфк_т_ПриемникОбменаXDTO.StandardAttribute.Code</inputByString>
+  <inputByString>Catalog.кфк_т_ПриемникОбменаXDTO.StandardAttribute.Description</inputByString>
+  <fullTextSearchOnInputByString>DontUse</fullTextSearchOnInputByString>
+  <createOnInput>Use</createOnInput>
+  <fullTextSearch>Use</fullTextSearch>
+  <levelCount>2</levelCount>
+  <foldersOnTop>true</foldersOnTop>
+  <codeLength>9</codeLength>
+  <descriptionLength>25</descriptionLength>
+  <codeType>String</codeType>
+  <codeAllowedLength>Variable</codeAllowedLength>
+  <checkUnique>true</checkUnique>
+  <autonumbering>true</autonumbering>
+  <defaultPresentation>AsDescription</defaultPresentation>
+  <editType>InDialog</editType>
+  <choiceMode>BothWays</choiceMode>
+  <attributes uuid="eaeca8c1-65dd-4441-b405-b9bfed1cb71b">
+    <name>СвязаннаяГруппа</name>
+    <synonym>
+      <key>ru</key>
+      <value>Связанная группа</value>
+    </synonym>
+    <type>
+      <types>CatalogRef.кфк_т_ПриемникОбменаXDTO</types>
+    </type>
+  </attributes>
+</mdclass:Catalog>

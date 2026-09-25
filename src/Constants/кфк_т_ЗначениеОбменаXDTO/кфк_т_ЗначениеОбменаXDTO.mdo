@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Constant xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="10ea694c-3de3-433c-a636-a048e615df44">
+  <producedTypes>
+    <managerType typeId="dea6f0ff-9a0a-47d3-9c76-139499a900ca" valueTypeId="f0de4bbf-347d-4454-8dff-2a3ae7e0ff54"/>
+    <valueManagerType typeId="a30de889-e9a4-464d-9c64-e3899a7097ee" valueTypeId="7957527d-4a6e-498a-985a-4eb2e5265456"/>
+    <valueKeyType typeId="107e519f-cd4e-43c6-bf12-31cb88fa8670" valueTypeId="6a5d0675-e545-4fce-bc7a-ee5fc3b4348b"/>
+  </producedTypes>
+  <name>кфк_т_ЗначениеОбменаXDTO</name>
+  <synonym>
+    <key>ru</key>
+    <value>Тестовое значение обмена XDTO</value>
+  </synonym>
+  <type>
+    <types>String</types>
+    <stringQualifiers>
+      <length>10</length>
+    </stringQualifiers>
+  </type>
+  <useStandardCommands>true</useStandardCommands>
+  <minValue xsi:type="core:UndefinedValue"/>
+  <maxValue xsi:type="core:UndefinedValue"/>
+  <dataLockControlMode>Managed</dataLockControlMode>
+</mdclass:Constant>

@@ -52,6 +52,7 @@
   <commonModules>CommonModule.ОМ_кфкИнтеграцияСлужебный</commonModules>
   <commonModules>CommonModule.ОМ_кфкИнтеграцияСлужебныйВызовСервера</commonModules>
   <commonModules>CommonModule.ОМ_кфкИнтеграцияСлужебныйПовтИсп</commonModules>
+  <commonModules>CommonModule.ОМ_кфкОбменДаннымиXDTOСервер</commonModules>
   <commonModules>CommonModule.ОМ_кфкОбработкаСобытийСлужебный</commonModules>
   <commonModules>CommonModule.ОМ_кфкОбщегоНазначенияСлужебный</commonModules>
   <commonModules>CommonModule.ОМ_кфкФоновыеОперацииСлужебный</commonModules>
@@ -69,6 +70,10 @@
   <commonModules>CommonModule.Спр_кфкКонсьюмеры_ММ</commonModules>
   <commonModules>CommonModule.Спр_кфкПродюсеры_ММ</commonModules>
   <commonModules>CommonModule.ют_КоннекторИнтеграцииДляТестов</commonModules>
+  <commonModules>CommonModule.ют_МенеджерОбменаXDTOДляВыбораПравил</commonModules>
+  <xDTOPackages>XDTOPackage.кфк_т_ГрафСсылокXDTO</xDTOPackages>
+  <constants>Constant.кфк_т_ЗначениеОбменаXDTO</constants>
+  <catalogs>Catalog.кфк_т_ПриемникОбменаXDTO</catalogs>
   <catalogs>Catalog.кфкКонсьюмеры</catalogs>
   <catalogs>Catalog.кфкПродюсеры</catalogs>
   <enums>Enum.кфкСобытияРегистрации</enums>

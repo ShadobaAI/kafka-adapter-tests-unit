@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:XDTOPackage xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="e6b50423-74e7-4cb8-ae72-b2daaace375d">
+  <name>кфк_т_ГрафСсылокXDTO</name>
+  <synonym>
+    <key>ru</key>
+    <value>Тестовый граф ссылок</value>
+  </synonym>
+  <namespace>http://v8.fsk.ru/kfk/unit/graph/1.0</namespace>
+</mdclass:XDTOPackage>

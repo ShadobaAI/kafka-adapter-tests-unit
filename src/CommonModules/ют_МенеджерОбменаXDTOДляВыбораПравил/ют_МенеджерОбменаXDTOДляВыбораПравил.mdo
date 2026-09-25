@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:CommonModule xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="5d613d10-930b-4631-adf2-b72c7b6be237">
+  <name>ют_МенеджерОбменаXDTOДляВыбораПравил</name>
+  <synonym>
+    <key>ru</key>
+    <value>Тестовый менеджер выбора правил XDTO</value>
+  </synonym>
+  <server>true</server>
+  <externalConnection>true</externalConnection>
+  <clientOrdinaryApplication>true</clientOrdinaryApplication>
+</mdclass:CommonModule>

@@ -31,6 +31,7 @@ groups:
   - CommonModule.ОМ_кфкИнтеграцияСлужебный
   - CommonModule.ОМ_кфкИнтеграцияСлужебныйВызовСервера
   - CommonModule.ОМ_кфкИнтеграцияСлужебныйПовтИсп
+  - CommonModule.ОМ_кфкОбменДаннымиXDTOСервер
   - CommonModule.ОМ_кфкОбработкаСобытийСлужебный
   - CommonModule.ОМ_кфкОбщегоНазначенияСлужебный
   - CommonModule.ОМ_кфкФоновыеОперацииСлужебный
@@ -44,6 +45,7 @@ groups:
   path: CommonModule
 - children:
   - CommonModule.ют_КоннекторИнтеграцииДляТестов
+  - CommonModule.ют_МенеджерОбменаXDTOДляВыбораПравил
   description: null
   name: Тестовые помощники
   order: 4
