@@ -7,6 +7,9 @@
     "doc-comment-type": {
       "enabled": false
     },
+    "bsl-legacy-check-static-feature-access": {
+      "enabled": false
+    },
     "extension-md-object-prefix": {
       "enabled": false
     }

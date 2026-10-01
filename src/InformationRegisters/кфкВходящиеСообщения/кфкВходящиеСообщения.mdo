@@ -225,7 +225,7 @@
     </extension>
   </attributes>
   <attributes uuid="1100ea89-d9a4-4998-abe1-5ed268aef181" extendedConfigurationObject="d7d9478d-81b5-41b6-aef7-75804ffeda2f">
-    <name>МеткаИзмененияМС</name>
+    <name>МеткаИзменения</name>
     <objectBelonging>Adopted</objectBelonging>
     <extension xsi:type="mdclassExtension:BasicFeatureExtension">
       <extendedConfigurationObject>Checked</extendedConfigurationObject>
@@ -235,7 +235,7 @@
           <type>Number</type>
         </types>
         <numberQualifiers>
-          <precision>15</precision>
+          <precision>30</precision>
           <nonNegative>true</nonNegative>
         </numberQualifiers>
       </typeExtension>
@@ -258,7 +258,7 @@
     </extension>
   </dimensions>
   <dimensions uuid="29d610ca-ab63-46fd-afcd-4d0adc04fbc1" extendedConfigurationObject="111ca233-437e-423e-bb9a-fac72f0cf50c">
-    <name>ДатаЗагрузкиМС</name>
+    <name>МеткаЗагрузки</name>
     <objectBelonging>Adopted</objectBelonging>
     <extension xsi:type="mdclassExtension:BasicFeatureExtension">
       <extendedConfigurationObject>Checked</extendedConfigurationObject>
@@ -268,8 +268,7 @@
           <type>Number</type>
         </types>
         <numberQualifiers>
-          <precision>19</precision>
-          <scale>4</scale>
+          <precision>30</precision>
           <nonNegative>true</nonNegative>
         </numberQualifiers>
       </typeExtension>

@@ -15,6 +15,7 @@
     <extendedConfigurationObject>Checked</extendedConfigurationObject>
     <informationRegisterPeriodicity>Checked</informationRegisterPeriodicity>
     <writeMode>Checked</writeMode>
+    <recordSetModule>Extended</recordSetModule>
   </extension>
   <useStandardCommands>true</useStandardCommands>
   <resources uuid="bbe35b10-b738-4e7c-b4e5-b7ba9c5e8cfa" extendedConfigurationObject="6b53242f-90ec-4441-929d-e40a10912da1">
@@ -280,7 +281,7 @@
     </extension>
   </attributes>
   <attributes uuid="9a875a41-42e5-4a93-8df2-00597c2bad21" extendedConfigurationObject="aa816974-7fec-4c4a-a209-74cbe7e41026">
-    <name>МеткаИзмененияМС</name>
+    <name>МеткаИзменения</name>
     <objectBelonging>Adopted</objectBelonging>
     <extension xsi:type="mdclassExtension:BasicFeatureExtension">
       <extendedConfigurationObject>Checked</extendedConfigurationObject>
@@ -290,7 +291,7 @@
           <type>Number</type>
         </types>
         <numberQualifiers>
-          <precision>15</precision>
+          <precision>30</precision>
           <nonNegative>true</nonNegative>
         </numberQualifiers>
       </typeExtension>
@@ -313,7 +314,7 @@
     </extension>
   </dimensions>
   <dimensions uuid="fd78d69e-4b30-45d3-8978-5155c4a1bcd0" extendedConfigurationObject="dcea6dff-ee4d-4454-ab67-2dff64dc7131">
-    <name>ДатаРегистрацииМС</name>
+    <name>МеткаРегистрации</name>
     <objectBelonging>Adopted</objectBelonging>
     <extension xsi:type="mdclassExtension:BasicFeatureExtension">
       <extendedConfigurationObject>Checked</extendedConfigurationObject>
@@ -323,7 +324,7 @@
           <type>Number</type>
         </types>
         <numberQualifiers>
-          <precision>15</precision>
+          <precision>30</precision>
           <nonNegative>true</nonNegative>
         </numberQualifiers>
       </typeExtension>
