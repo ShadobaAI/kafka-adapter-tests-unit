@@ -37,6 +37,7 @@
     </extension>
     <languageCode>ru</languageCode>
   </languages>
+  <commonModules>CommonModule.БлокировкаРаботыСВнешнимиРесурсами</commonModules>
   <commonModules>CommonModule.ДлительныеОперации</commonModules>
   <commonModules>CommonModule.кфкИнтеграцияСлужебный</commonModules>
   <commonModules>CommonModule.кфкИнтеграцияСлужебныйПовтИсп</commonModules>
@@ -60,6 +61,7 @@
   <commonModules>CommonModule.ОМ_кфкФоновыеОперацииСлужебный_ПолучениеОчистка</commonModules>
   <commonModules>CommonModule.ОМ_кфкФоновыеОперацииСлужебный_Стенд</commonModules>
   <commonModules>CommonModule.ОМ_кфкФоновыеОперацииСлужебный_Управление</commonModules>
+  <commonModules>CommonModule.РегламентныеЗаданияСервер</commonModules>
   <commonModules>CommonModule.РС_кфкВходящиеСообщения_ММ</commonModules>
   <commonModules>CommonModule.РС_кфкИсходящиеСообщения_ММ</commonModules>
   <commonModules>CommonModule.РС_кфкПараметрыКонтроляИнтеграции_ММ</commonModules>
