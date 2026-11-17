@@ -51,6 +51,7 @@ groups:
   order: 4
   path: CommonModule
 - children:
+  - CommonModule.БлокировкаРаботыСВнешнимиРесурсами
   - CommonModule.ДлительныеОперации
   - CommonModule.кфкИнтеграцияСлужебный
   - CommonModule.кфкИнтеграцияСлужебныйПовтИсп
@@ -59,6 +60,8 @@ groups:
   - CommonModule.кфкФоновыеОперацииСлужебный
   - CommonModule.ОбщегоНазначения
   - CommonModule.ОбщегоНазначенияКлиентСервер
+  - CommonModule.РегламентныеЗаданияСервер
+  - CommonModule.СтроковыеФункцииКлиентСервер
   description: null
   name: Заимствованные модули
   order: 5
