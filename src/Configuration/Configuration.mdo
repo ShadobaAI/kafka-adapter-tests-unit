@@ -41,6 +41,7 @@
   <commonModules>CommonModule.ДлительныеОперации</commonModules>
   <commonModules>CommonModule.кфкИнтеграцияСлужебный</commonModules>
   <commonModules>CommonModule.кфкИнтеграцияСлужебныйПовтИсп</commonModules>
+  <commonModules>CommonModule.кфкОбменДаннымиXDTOСервер</commonModules>
   <commonModules>CommonModule.кфкОбработкаСобытийСлужебный</commonModules>
   <commonModules>CommonModule.кфкОбщегоНазначенияСлужебный</commonModules>
   <commonModules>CommonModule.кфкФоновыеОперацииСлужебный</commonModules>
