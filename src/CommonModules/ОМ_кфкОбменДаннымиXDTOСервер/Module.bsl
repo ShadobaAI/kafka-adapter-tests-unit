@@ -641,6 +641,50 @@
 					"ют_ОтсутствующийМенеджерОбмена:http://v8.fsk.ru/kfk/test/1.0")
 				.СПараметрами("Получение", "", "ют_ОтсутствующийМенеджерОбмена:");
 
+	ЮТТесты
+		.ДобавитьТестовыйНабор("Общий модуль кфкОбменДаннымиXDTOСервер. ЗаменитьДополнительныеМассивы()")
+			.Тег("CI")
+			.Тег("ОбщийМодуль")
+			.Тег("Модульные")
+			.Тег("кфкОбменДаннымиXDTOСервер")
+			.Тег("ЗаменитьДополнительныеМассивы")
+			.ДобавитьСерверныйТест("ЗаменитьДополнительныеМассивы_ПодготавливаетJSON",
+				"ЗаменитьДополнительныеМассивы(). Подготавливает входящий JSON по типу XDTO")
+				.СПараметрами(
+					"OpenItem",
+					"{""name"":""A-42"",""values"":[""first"",""second""],""empty"":[],"
+						+ """labels"":[""priority""],""extraRows"":[{""number"":1},{""number"":2}],"
+						+ """status"":""open"",""count"":2,""approved"":true,"
+						+ """extraObject"":{""values"":[1,2]},""optional"":null}",
+					"{""name"":""A-42"",""values"":[""first"",""second""],""empty"":null,"
+						+ """labels"":null,""extraRows"":null,""status"":""open"",""count"":2,""approved"":true,"
+						+ """extraObject"":{""values"":[1,2]},""optional"":null}",
+					Истина)
+				.СПараметрами(
+					"Envelope",
+					"{""item"":{""name"":""Direct"",""extra"":[true]},"
+						+ """items"":[{""name"":""First"",""extra"":[]},{""name"":""Second"",""extra"":[""tag""]}],"
+						+ """tables"":[{""row"":[{""name"":""Nested row"",""extra"":[3]}]}]}",
+					"{""item"":{""name"":""Direct"",""extra"":null},"
+						+ """items"":[{""name"":""First"",""extra"":null},{""name"":""Second"",""extra"":null}],"
+						+ """tables"":[{""row"":[{""name"":""Nested row"",""extra"":null}]}]}",
+					Истина)
+				.СПараметрами(
+					"ItemTable",
+					"[{""name"":""A"",""extra"":[""first""]},{""name"":""B"",""extra"":[]}]",
+					"[{""name"":""A"",""extra"":null},{""name"":""B"",""extra"":null}]",
+					Истина)
+				.СПараметрами(
+					"ClosedItem",
+					"{""name"":""A-41"",""extra"":[""priority""]}",
+					"{""name"":""A-41"",""extra"":[""priority""]}",
+					Ложь)
+				.СПараметрами(
+					"OpenItem",
+					"{""name"":""A-43"",""values"":[],""approved"":false}",
+					"{""name"":""A-43"",""values"":[],""approved"":false}",
+					Ложь);
+
 КонецПроцедуры
 
 #Область ПроверкиКомпонентовИПравил
@@ -2580,6 +2624,27 @@
 
 КонецПроцедуры
 
+// Проверяет данные и признак замены перед передачей JSON фабрике XDTO.
+//
+// Параметры:
+//  ИмяТипа - Строка - Имя типа из тестовой схемы.
+//  ВходнойJSON - Строка - Тело сообщения до подготовки.
+//  ОжидаемыйJSON - Строка - Ожидаемое содержимое после подготовки.
+//  ОжидаетсяЗамена - Булево - Ожидаемый признак замены хотя бы одного массива.
+Процедура ЗаменитьДополнительныеМассивы_ПодготавливаетJSON(
+	ИмяТипа, ВходнойJSON, ОжидаемыйJSON, ОжидаетсяЗамена) Экспорт
+
+	ТипXDTO = ТипДляПроверкиДополнительныхМассивов(ИмяТипа);
+	ДанныеJSON = ОбщегоНазначения.JSONВЗначение(ВходнойJSON);
+	ОжидаемыеДанные = ОбщегоНазначения.JSONВЗначение(ОжидаемыйJSON);
+
+	БылаЗамена = кфкОбменДаннымиXDTOСервер.ют_ЗаменитьДополнительныеМассивы(ДанныеJSON, ТипXDTO);
+
+	ЮТест.ОжидаетЧто(БылаЗамена, "Признак замены необъявленных массивов").Равно(ОжидаетсяЗамена);
+	ЮТест.ОжидаетЧто(ДанныеJSON, "Содержимое JSON после подготовки для фабрики XDTO").Равно(ОжидаемыеДанные);
+
+КонецПроцедуры
+
 #КонецОбласти
 
 #Область ПроверкиОграниченийСхемы
@@ -4201,6 +4266,59 @@
 	Компоненты.XMLСхема = "http://v8.fsk.ru/kfk/test/1.0";
 	кфкОбменДаннымиXDTOСервер.ИнициализироватьТаблицыПравилОбмена(Компоненты);
 	Возврат Компоненты;
+
+КонецФункции
+
+// Определяет тестовый тип XDTO без установки пакета в конфигурацию.
+//
+// Параметры:
+//  ИмяТипа - Строка - Имя типа из тестовой схемы.
+//
+// Возвращаемое значение:
+//  ТипОбъектаXDTO - Тип для подготовки входящего JSON.
+Функция ТипДляПроверкиДополнительныхМассивов(Знач ИмяТипа)
+
+	ТекстСхемы =
+		"<xs:schema xmlns:xs=""http://www.w3.org/2001/XMLSchema"" xmlns:kfk=""urn:kfk:tests:xdto:arrays""
+		|    targetNamespace=""urn:kfk:tests:xdto:arrays"" elementFormDefault=""qualified"">
+		|  <xs:complexType name=""OpenItem"">
+		|    <xs:sequence>
+		|      <xs:element name=""name"" type=""xs:string""/>
+		|      <xs:element name=""values"" type=""xs:string"" minOccurs=""0"" maxOccurs=""unbounded""/>
+		|    </xs:sequence>
+		|    <xs:anyAttribute processContents=""lax""/>
+		|  </xs:complexType>
+		|  <xs:complexType name=""ClosedItem"">
+		|    <xs:sequence>
+		|      <xs:element name=""name"" type=""xs:string""/>
+		|    </xs:sequence>
+		|  </xs:complexType>
+		|  <xs:complexType name=""ItemTable"">
+		|    <xs:sequence>
+		|      <xs:element name=""row"" type=""kfk:OpenItem"" minOccurs=""0"" maxOccurs=""unbounded""/>
+		|    </xs:sequence>
+		|  </xs:complexType>
+		|  <xs:complexType name=""Envelope"">
+		|    <xs:sequence>
+		|      <xs:element name=""item"" type=""kfk:OpenItem"" minOccurs=""0""/>
+		|      <xs:element name=""items"" type=""kfk:OpenItem"" minOccurs=""0"" maxOccurs=""unbounded""/>
+		|      <xs:element name=""tables"" type=""kfk:ItemTable"" minOccurs=""0"" maxOccurs=""unbounded""/>
+		|    </xs:sequence>
+		|  </xs:complexType>
+		|</xs:schema>";
+	Чтение = Новый ЧтениеXML;
+	Чтение.УстановитьСтроку(ТекстСхемы);
+	ПостроительДокумента = Новый ПостроительDOM;
+	ДокументСхемы = ПостроительДокумента.Прочитать(Чтение);
+	Чтение.Закрыть();
+
+	ПостроительСхемы = Новый ПостроительСхемXML;
+	Схема = ПостроительСхемы.СоздатьСхемуXML(ДокументСхемы.ЭлементДокумента);
+	НаборСхем = Новый НаборСхемXML;
+	НаборСхем.Добавить(Схема);
+	Фабрика = Новый ФабрикаXDTO(НаборСхем);
+
+	Возврат Фабрика.Тип("urn:kfk:tests:xdto:arrays", ИмяТипа);
 
 КонецФункции
 
