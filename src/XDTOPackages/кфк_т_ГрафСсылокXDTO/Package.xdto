@@ -48,4 +48,12 @@
 		<property name="nullable" type="xs:string" lowerBound="0" upperBound="1" nillable="true"/>
 	</objectType>
 	<objectType name="ПустойТипКонстанты"/>
+	<objectType name="ПроверкаФорматовДатыИВремени">
+		<property name="date" type="xs:date" lowerBound="0" upperBound="1"/>
+		<property name="dateList" type="xs:date" lowerBound="0" upperBound="2"/>
+		<property name="time" type="xs:time" lowerBound="0" upperBound="1"/>
+		<property name="timeList" type="xs:time" lowerBound="0" upperBound="2"/>
+		<property name="dateTime" type="xs:dateTime" lowerBound="0" upperBound="1"/>
+		<property name="dateTimeList" type="xs:dateTime" lowerBound="0" upperBound="2"/>
+	</objectType>
 </package>
