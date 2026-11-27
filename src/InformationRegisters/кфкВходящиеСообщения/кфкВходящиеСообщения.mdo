@@ -257,7 +257,7 @@
       </typeExtension>
     </extension>
   </dimensions>
-  <dimensions uuid="29d610ca-ab63-46fd-afcd-4d0adc04fbc1" extendedConfigurationObject="111ca233-437e-423e-bb9a-fac72f0cf50c">
+  <dimensions uuid="0e58269e-14c3-41e1-8a4f-4e31aa9e0ab2" extendedConfigurationObject="33579dc0-bb2e-4e68-94c3-faed2834f89d">
     <name>МеткаЗагрузки</name>
     <objectBelonging>Adopted</objectBelonging>
     <extension xsi:type="mdclassExtension:BasicFeatureExtension">
@@ -269,6 +269,24 @@
         </types>
         <numberQualifiers>
           <precision>30</precision>
+          <nonNegative>true</nonNegative>
+        </numberQualifiers>
+      </typeExtension>
+    </extension>
+  </dimensions>
+  <dimensions uuid="65996ec3-db3b-4bda-a497-808efc73ccdd" extendedConfigurationObject="111ca233-437e-423e-bb9a-fac72f0cf50c">
+    <name>УдалитьДатаЗагрузкиМС</name>
+    <objectBelonging>Adopted</objectBelonging>
+    <extension xsi:type="mdclassExtension:BasicFeatureExtension">
+      <extendedConfigurationObject>Checked</extendedConfigurationObject>
+      <typeExtension>
+        <types>
+          <state>Checked</state>
+          <type>Number</type>
+        </types>
+        <numberQualifiers>
+          <precision>19</precision>
+          <scale>4</scale>
           <nonNegative>true</nonNegative>
         </numberQualifiers>
       </typeExtension>
